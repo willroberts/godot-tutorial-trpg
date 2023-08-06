@@ -103,7 +103,7 @@ public partial class Unit : Path2D
 
 	public void WalkAlong(Godot.Collections.Array<Vector2> Path)
 	{
-		if (Path.IsEmpty()) { return; }
+		if (Path.Count == 0) { return; }
 		
 		Curve.AddPoint(Vector2.Zero);
 		foreach (Vector2 Point in Path)
