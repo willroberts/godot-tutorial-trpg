@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dax7xcwu00qcx"]
+[gd_scene load_steps=4 format=3 uid="uid://dax7xcwu00qcx"]
 
 [ext_resource type="PackedScene" uid="uid://bhmvga1in3xso" path="res://Unit.tscn" id="2_1nv1w"]
+[ext_resource type="Texture2D" uid="uid://dckmr0lmco10x" path="res://Units/squirrel.png" id="2_u6mex"]
 [ext_resource type="PackedScene" uid="uid://5cqvuggrfgng" path="res://Background/NewMap.tscn" id="2_y6f1r"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Unit" parent="." instance=ExtResource("2_1nv1w")]
+position = Vector2(523, 366)
+Skin = ExtResource("2_u6mex")
 
 [node name="NewMap" parent="." instance=ExtResource("2_y6f1r")]

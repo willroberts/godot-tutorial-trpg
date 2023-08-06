@@ -6,7 +6,7 @@ using System;
 public partial class Unit : Path2D
 {
 	[Export]
-	public Grid Grid = (Grid)GD.Load("res://Grid.tres");
+	public Grid Grid = ResourceLoader.Load("res://Grid.tres") as Grid;
 
 	[Export]
 	public int MoveRange = 6;
@@ -38,13 +38,18 @@ public partial class Unit : Path2D
 		_Sprite = _PathFollow.GetNode<Sprite2D>("Sprite");
 		_AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
-		Cell = Grid.CalculateGridPosition(Position);
+		SetCell(Grid.CalculateGridPosition(Position));
 		Position = Grid.CalculateMapPosition(Cell);
 		
-		if (!Engine.IsEditorHint())
-		{
-			Curve = new Curve2D();
-		}
+		if (!Engine.IsEditorHint())	{ Curve = new Curve2D(); }
+		
+		// Debugging: Test navigation.
+		WalkAlong(new Godot.Collections.Array<Vector2>{
+			new Vector2(2, 2),
+			new Vector2(2, 5),
+			new Vector2(8, 5),
+			new Vector2(8, 7)
+		});
 	}
 
 	public override void _Process(double delta)
@@ -53,7 +58,7 @@ public partial class Unit : Path2D
 		
 		if (_PathFollow.ProgressRatio >= 1.0)
 		{
-			_IsWalking = false;
+			_SetIsWalking(false);
 			_PathFollow.Progress = 0.0F;
 			Position = Grid.CalculateMapPosition(Cell);
 			Curve.ClearPoints();
@@ -111,8 +116,8 @@ public partial class Unit : Path2D
 			Curve.AddPoint(Grid.CalculateMapPosition(Point) - Position);
 		}
 		
-		Cell = Path[-1];
-		_IsWalking = true;
+		SetCell(Path[-1]);
+		_SetIsWalking(true);
 	}
 
 	private void _SetIsWalking(bool Value)

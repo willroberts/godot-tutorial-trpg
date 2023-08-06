@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhmvga1in3xso"]
+[gd_scene load_steps=7 format=3 uid="uid://bhmvga1in3xso"]
 
+[ext_resource type="Script" path="res://Unit.cs" id="1_f4o7n"]
 [ext_resource type="Texture2D" uid="uid://dfad6nqynkelo" path="res://Units/unit_shadow.svg" id="1_p4hls"]
+[ext_resource type="Texture2D" uid="uid://dckmr0lmco10x" path="res://Units/squirrel.png" id="1_sl6pq"]
 
 [sub_resource type="Animation" id="Animation_u4efe"]
 resource_name = "idle"
@@ -41,6 +43,7 @@ _data = {
 }
 
 [node name="Unit" type="Path2D"]
+script = ExtResource("1_f4o7n")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotates = false
@@ -48,6 +51,7 @@ loop = false
 
 [node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
 scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_sl6pq")
 
 [node name="Shadow" type="Sprite2D" parent="PathFollow2D"]
 modulate = Color(0.10208, 0.11, 0.0902, 0.329412)
