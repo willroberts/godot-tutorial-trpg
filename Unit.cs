@@ -20,8 +20,8 @@ public partial class Unit : Path2D
 	[Export]
 	public float MoveSpeed = (float)600.0;
 
-	[Signal]
-	public delegate void WalkFinishedEventHandler();
+	//[Signal]
+	//public delegate void WalkFinishedEventHandler();
 
 	public Vector2 Cell = Vector2.Zero;
 	public bool IsSelected = false;
@@ -42,14 +42,6 @@ public partial class Unit : Path2D
 		Position = Grid.CalculateMapPosition(Cell);
 		
 		if (!Engine.IsEditorHint())	{ Curve = new Curve2D(); }
-		
-		// Debugging: Test navigation.
-		WalkAlong(new Godot.Collections.Array<Vector2>{
-			new Vector2(2, 2),
-			new Vector2(2, 5),
-			new Vector2(8, 5),
-			new Vector2(8, 7)
-		});
 	}
 
 	public override void _Process(double delta)
@@ -116,7 +108,7 @@ public partial class Unit : Path2D
 			Curve.AddPoint(Grid.CalculateMapPosition(Point) - Position);
 		}
 		
-		SetCell(Path[-1]);
+		SetCell(Path[Path.Count-1]);
 		_SetIsWalking(true);
 	}
 
