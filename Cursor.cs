@@ -56,7 +56,8 @@ public partial class Cursor : Node2D
 
 	public override void _Draw()
 	{
-		DrawRect(new Rect2(-Grid.CellSize / 2, Grid.CellSize), Colors.AliceBlue, false, 2.0F);
+		DrawRect(new Rect2(-Grid.CellSize / 2, Grid.CellSize),
+				 Colors.AliceBlue, false, 2.0F);
 	}
 
 	public void SetCell(Vector2 Value)
