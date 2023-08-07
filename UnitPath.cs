@@ -20,6 +20,7 @@ public partial class UnitPath : TileMap
 	public override void _Ready()
 	{
 		// Debugging.
+		/*
 		Vector2 StartRect = new Vector2(4, 4);
 		Vector2 EndRect = new Vector2(10, 8);
 		Array<Vector2> Points = new();
@@ -32,6 +33,7 @@ public partial class UnitPath : TileMap
 		}
 		Initialize(Points);
 		DrawPath(new Vector2I((int)StartRect.X, (int)StartRect.Y), new Vector2I(8, 7));
+		*/
 	}
 
 	public override void _Process(double delta) {}

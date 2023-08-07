@@ -1,14 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://dax7xcwu00qcx"]
+[gd_scene load_steps=5 format=3 uid="uid://dax7xcwu00qcx"]
 
 [ext_resource type="PackedScene" uid="uid://bhmvga1in3xso" path="res://Unit.tscn" id="2_1nv1w"]
+[ext_resource type="Script" path="res://GameBoard.cs" id="2_ny2fk"]
 [ext_resource type="PackedScene" uid="uid://5cqvuggrfgng" path="res://Background/NewMap.tscn" id="2_y6f1r"]
 [ext_resource type="PackedScene" uid="uid://ceehdvbk1gr7u" path="res://Cursor.tscn" id="3_fcu7f"]
 
 [node name="Main" type="Node2D"]
 
-[node name="Unit" parent="." instance=ExtResource("2_1nv1w")]
-position = Vector2(523, 366)
-
 [node name="NewMap" parent="." instance=ExtResource("2_y6f1r")]
 
-[node name="Cursor" parent="." instance=ExtResource("3_fcu7f")]
+[node name="GameBoard" type="Node2D" parent="."]
+script = ExtResource("2_ny2fk")
+
+[node name="Unit" parent="GameBoard" instance=ExtResource("2_1nv1w")]
+y_sort_enabled = true
+position = Vector2(523, 366)
+
+[node name="Cursor" parent="GameBoard" instance=ExtResource("3_fcu7f")]
+y_sort_enabled = true
