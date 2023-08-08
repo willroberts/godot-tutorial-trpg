@@ -14,7 +14,7 @@ public partial class Pathfinder : RefCounted
 
     private Grid _grid;
 
-    private AStar2D _aStar = new AStar2D();
+    private AStar2D _aStar = new();
 
     public Pathfinder(Grid grid, Array<Vector2I> walkableCells)
     {

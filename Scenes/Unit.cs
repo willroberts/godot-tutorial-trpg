@@ -100,7 +100,7 @@ public partial class Unit : Path2D
 			Curve.AddPoint(Grid.CalculateMapPosition(point) - Position);
 		}
 		
-		SetCell(path[path.Count-1]);
+		SetCell(path[^1]);
 		SetIsWalking(true);
 	}
 
