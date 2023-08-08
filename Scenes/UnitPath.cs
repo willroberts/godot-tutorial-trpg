@@ -10,7 +10,7 @@ public partial class UnitPath : TileMap
 	public Grid Grid = ResourceLoader.Load("res://Resources/Grid.tres") as Grid;
 
 	private Pathfinder _pathfinder;
-	public Array<Vector2I> CurrentPath;
+	public Array<Vector2I> CurrentPath = new();
 
 	public void Initialize(Array<Vector2I> walkableCells)
 	{
