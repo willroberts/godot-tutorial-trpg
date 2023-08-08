@@ -14,7 +14,7 @@ Godot 3 to 4.
 
 This demo implements a 2D grid which can contain units. Units may be selected,
 which will show their allowed movement range with a flood fill algorithm. 
-Clicking on a tile will generate the shortest path using the AStar algorithm,
+Clicking on a tile will generate the shortest path using the A* algorithm,
 then render an arrow showing the path. Clicking again will move the unit.
 
 ## Licenses
