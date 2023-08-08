@@ -15,13 +15,21 @@ public partial class GameBoard : Node2D
 
 	public Grid Grid = ResourceLoader.Load("res://Grid.tres") as Grid;
 	private Dictionary<Vector2I, Unit> _Units = new();
+	private Unit _ActiveUnit;
+	private Array<Vector2I> _WalkableCells;
+	private UnitOverlay _UnitOverlay;
+	private UnitPath _UnitPath;
 
 	public override void _Ready()
 	{
+		_UnitOverlay = GetNode<UnitOverlay>("UnitOverlay");
+		_UnitPath = GetNode<UnitPath>("UnitPath");
 		_Reinitialize();
 
 		// Debugging.
 		//GD.Print(_Units);
+		//Unit _TestUnit = GetNode<Unit>("Unit");
+		//_UnitOverlay.DrawCells(GetWalkableCells(_TestUnit));
 	}
 
 	public override void _Process(double delta) {}
@@ -90,5 +98,66 @@ public partial class GameBoard : Node2D
 		}
 
 		return Result;
+	}
+
+	private void _SelectUnit(Vector2I Cell)
+	{
+		if (!_Units.ContainsKey(Cell)) { return; }
+
+		_ActiveUnit = _Units[Cell];
+		_ActiveUnit.IsSelected = true;
+		_WalkableCells = GetWalkableCells(_ActiveUnit);
+		_UnitOverlay.DrawCells(_WalkableCells);
+		_UnitPath.Initialize(ToVector2(_WalkableCells));
+	}
+
+	private void _DeselectActiveUnit()
+	{
+		_ActiveUnit.IsSelected = false;
+		_UnitOverlay.Clear();
+		_UnitPath.Stop();
+	}
+
+	private void _ClearActiveUnit()
+	{
+		_ActiveUnit = null;
+		_WalkableCells.Clear();
+	}
+
+	private async void _MoveActiveUnit(Vector2I NewCell)
+	{
+		if (IsOccupied(NewCell) || !_WalkableCells.Contains(NewCell)) { return; }
+
+		_Units.Remove(new Vector2I(
+			(int)_ActiveUnit.Cell.X,
+			(int)_ActiveUnit.Cell.Y
+		));
+		_Units[NewCell] = _ActiveUnit;
+		_DeselectActiveUnit();
+		_ActiveUnit.WalkAlong(ToVector2(_UnitPath.CurrentPath));
+		await ToSignal(_ActiveUnit, "walk_finished");
+		_ClearActiveUnit();
+	}
+
+	// Dumb and inefficient. Should have started with Vector2I from the onset.
+	private Array<Vector2> ToVector2(Array<Vector2I> Input)
+	{
+		Array<Vector2> Out = new();
+		foreach (Vector2I V in Input)
+		{
+			Out.Add(new Vector2(V.X, V.Y));
+		}
+		return Out;
+	}
+
+	// Dumb and inefficient. Should have started with Vector2I from the onset.
+	private Array<Vector2I> ToVector2I(Array<Vector2> Input)
+	{
+		Array<Vector2I> Out = new();
+		foreach (Vector2 V in Input)
+		{
+			Out.Add(new Vector2I((int)V.X, (int)V.Y));
+		}
+		return Out;
 	}
 }

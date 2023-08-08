@@ -9,7 +9,7 @@ public partial class Unit : Path2D
 	public Grid Grid = ResourceLoader.Load("res://Grid.tres") as Grid;
 
 	[Export]
-	public int MoveRange = 6;
+	public int MoveRange = 4;
 
 	[Export]
 	public Texture Skin;
