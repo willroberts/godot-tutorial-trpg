@@ -208,9 +208,3 @@ public partial class GameBoard : Node2D
 		return Out;
 	}
 }
-
-
-private void _OnCursorMoved(Vector2 NewCell)
-{
-	// Replace with function body.
-}
