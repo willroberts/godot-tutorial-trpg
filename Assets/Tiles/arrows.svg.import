@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfad6nqynkelo"
-path="res://.godot/imported/unit_shadow.svg-3b1ef9774820a8cb875ace739806bcde.ctex"
+uid="uid://85plufbhtyi0"
+path="res://.godot/imported/arrows.svg-59398f6d857f984b5fa97fa2798f5cdf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Units/unit_shadow.svg"
-dest_files=["res://.godot/imported/unit_shadow.svg-3b1ef9774820a8cb875ace739806bcde.ctex"]
+source_file="res://Assets/Tiles/arrows.svg"
+dest_files=["res://.godot/imported/arrows.svg-59398f6d857f984b5fa97fa2798f5cdf.ctex"]
 
 [params]
 
