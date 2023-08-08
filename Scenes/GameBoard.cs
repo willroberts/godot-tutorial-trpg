@@ -26,10 +26,12 @@ public partial class GameBoard : Node2D
 		_unitPath = GetNode<UnitPath>("UnitPath");
 		Reinitialize();
 
-		// Debugging.
-		//GD.Print(_units);
-		//Unit _TestUnit = GetNode<Unit>("Unit");
-		//_unitOverlay.DrawCells(GetWalkableCells(_TestUnit));
+		if (OS.HasFeature("DebugMode"))
+		{
+			GD.Print(_units);
+			Unit testUnit = GetNode<Unit>("Unit");
+			_unitOverlay.DrawCells(GetWalkableCells(testUnit));
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
