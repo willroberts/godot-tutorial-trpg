@@ -4,11 +4,11 @@ using System;
 [GlobalClass, Tool]
 public partial class Cursor : Node2D
 {
-	//[Signal]
-	//blah AcceptPressedSignalHandler(Vector2 Cell)
+	[Signal]
+	public delegate void AcceptPressedEventHandler(Vector2 Cell);
 
-	//[Signal]
-	//blah MovedSignalHandler(Vector2 NewCell)
+	[Signal]
+	public delegate void MovedEventHandler(Vector2 NewCell);
 
 	[Export]
 	public Grid Grid = ResourceLoader.Load("res://Grid.tres") as Grid;
