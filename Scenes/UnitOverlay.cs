@@ -5,9 +5,6 @@ using System;
 [GlobalClass]
 public partial class UnitOverlay : TileMap
 {
-	public override void _Ready() {}
-	public override void _Process(double delta) {}
-
 	public void DrawCells(Array<Vector2I> Cells)
 	{
 		Clear();

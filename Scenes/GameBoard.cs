@@ -6,7 +6,7 @@ using System.Collections;
 [GlobalClass]
 public partial class GameBoard : Node2D
 {
-	public Array<Vector2I> DIRECTIONS = new(){
+	public readonly Vector2I[] Directions = {
 		Vector2I.Left,
 		Vector2I.Right,
 		Vector2I.Up,
@@ -24,15 +24,13 @@ public partial class GameBoard : Node2D
 	{
 		_UnitOverlay = GetNode<UnitOverlay>("UnitOverlay");
 		_UnitPath = GetNode<UnitPath>("UnitPath");
-		_Reinitialize();
+		Reinitialize();
 
 		// Debugging.
 		//GD.Print(_Units);
 		//Unit _TestUnit = GetNode<Unit>("Unit");
 		//_UnitOverlay.DrawCells(GetWalkableCells(_TestUnit));
 	}
-
-	public override void _Process(double delta) {}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
@@ -50,7 +48,7 @@ public partial class GameBoard : Node2D
 		return _Units.ContainsKey(Cell);
 	}
 
-	private void _Reinitialize()
+	private void Reinitialize()
 	{
 		_Units.Clear();
 
@@ -83,7 +81,7 @@ public partial class GameBoard : Node2D
 			if (Distance > MaxDistance) { continue; }
 
 			Result.Add(CurrentCell);
-			foreach (Vector2I Direction in DIRECTIONS)
+			foreach (Vector2I Direction in Directions)
 			{
 				Vector2I Coords = CurrentCell + Direction;
 				if (IsOccupied(Coords)) { continue; }

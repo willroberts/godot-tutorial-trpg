@@ -50,10 +50,10 @@ public partial class Cursor : Node2D
 		}
 		if (!ShouldMove) { return; }
 
-		if (@event.IsAction("ui_up")) { Cell = Vector2I.Up; }
-		if (@event.IsAction("ui_down")) { Cell = Vector2I.Down; }
 		if (@event.IsAction("ui_left")) { Cell = Vector2I.Left; }
 		if (@event.IsAction("ui_right")) { Cell = Vector2I.Right; }
+		if (@event.IsAction("ui_up")) { Cell = Vector2I.Up; }
+		if (@event.IsAction("ui_down")) { Cell = Vector2I.Down; }
 	}
 
 	public override void _Draw()

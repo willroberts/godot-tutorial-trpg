@@ -5,12 +5,11 @@ using System;
 [GlobalClass]
 public partial class Pathfinder : RefCounted
 {
-    public Array<Vector2> DIRECTIONS = new()
-    {
-        Vector2.Left,
-        Vector2.Right,
-        Vector2.Up,
-        Vector2.Down
+    public readonly Vector2I[] Directions = {
+        Vector2I.Left,
+        Vector2I.Right,
+        Vector2I.Up,
+        Vector2I.Down
     };
 
     private Grid _Grid;
@@ -57,7 +56,7 @@ public partial class Pathfinder : RefCounted
     private Array<int> _FindNeighborIndices(Vector2I Cell, Dictionary<Vector2I, int> CellMappings)
     {
         Array<int> Result = new();
-        foreach (Vector2I Direction in DIRECTIONS)
+        foreach (Vector2I Direction in Directions)
         {
             Vector2I Neighbor = Cell + Direction;
             if (!CellMappings.ContainsKey(Neighbor)) { continue; }
