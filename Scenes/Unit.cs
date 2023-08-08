@@ -95,7 +95,10 @@ public partial class Unit : Path2D
 
 	public void WalkAlong(Array<Vector2I> path)
 	{
-		if (path.Count == 0) { return; }
+		if (path.Count == 0) {
+			GD.Print("Error: Empty path provided to WalkAlong()");
+			return;
+		}
 		
 		Curve.AddPoint(Vector2.Zero);
 		foreach (Vector2I point in path)

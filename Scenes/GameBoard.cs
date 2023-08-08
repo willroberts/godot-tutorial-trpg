@@ -36,7 +36,10 @@ public partial class GameBoard : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (_activeUnit == null) { return; }
+		if (_activeUnit == null) {
+			GD.Print("Error: _activeUnit was null");
+			return;
+		}
 
 		if (@event.IsActionPressed("ui_cancel"))
 		{
@@ -128,7 +131,7 @@ public partial class GameBoard : Node2D
 		DeselectActiveUnit();
 
 		_activeUnit.WalkAlong(_unitPath.CurrentPath);
-		await ToSignal(_activeUnit, "walk_finished");
+		await ToSignal(_activeUnit, "WalkFinished");
 		ClearActiveUnit();
 	}
 

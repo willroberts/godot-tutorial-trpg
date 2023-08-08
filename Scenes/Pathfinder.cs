@@ -31,10 +31,13 @@ public partial class Pathfinder : RefCounted
     {
         int startIndex = _grid.AsIndex(start);
         int endIndex = _grid.AsIndex(end);
+
         if (_aStar.HasPoint(startIndex) && _aStar.HasPoint(endIndex))
         {
             return UnpackArray(_aStar.GetPointPath(startIndex, endIndex));
         }
+
+        GD.Print("Error: Failed to get point path from AStar");
         return new Array<Vector2I>();
     }
 
