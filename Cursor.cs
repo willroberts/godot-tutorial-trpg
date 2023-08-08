@@ -37,7 +37,7 @@ public partial class Cursor : Node2D
 		else if (@event.IsActionPressed("click") ||
 				 @event.IsActionPressed("ui_accept"))
 		{
-			//EmitSignal("accept_pressed", Cell);
+			EmitSignal("accept_pressed", Cell);
 			GetViewport().SetInputAsHandled();
 		}
 
@@ -67,7 +67,7 @@ public partial class Cursor : Node2D
 
 		Cell = NewCell;
 		Position = Grid.CalculateMapPosition(Cell);
-		//EmitSignal("moved", Cell);
+		EmitSignal("moved", Cell);
 		_Timer.Start();
 	}
 }

@@ -45,6 +45,7 @@ _data = {
 [node name="Unit" type="Path2D"]
 z_index = 1
 script = ExtResource("1_f4o7n")
+MoveRange = 6
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 z_index = 1
