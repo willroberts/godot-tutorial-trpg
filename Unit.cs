@@ -20,9 +20,6 @@ public partial class Unit : Path2D
 	[Export]
 	public float MoveSpeed = (float)600.0;
 
-	//[Signal]
-	//public delegate void WalkFinishedEventHandler();
-
 	public Vector2 Cell = Vector2.Zero;
 	public bool IsSelected = false;
 	private bool _IsWalking = false;
