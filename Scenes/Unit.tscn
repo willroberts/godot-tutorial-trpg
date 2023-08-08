@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhmvga1in3xso"]
+[gd_scene load_steps=6 format=3 uid="uid://bhmvga1in3xso"]
 
 [ext_resource type="Script" path="res://Scenes/Unit.cs" id="1_us1y8"]
-[ext_resource type="Texture2D" uid="uid://dckmr0lmco10x" path="res://Assets/Units/squirrel.png" id="2_5ng1y"]
 [ext_resource type="Texture2D" uid="uid://dfad6nqynkelo" path="res://Assets/Units/unit_shadow.svg" id="3_5we48"]
 
 [sub_resource type="Animation" id="Animation_u4efe"]
@@ -55,11 +54,11 @@ loop = false
 [node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
 z_index = 1
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_5ng1y")
 
 [node name="Shadow" type="Sprite2D" parent="PathFollow2D"]
 modulate = Color(0.10208, 0.11, 0.0902, 0.329412)
 z_index = 1
+position = Vector2(2.08165e-12, 40)
 texture = ExtResource("3_5we48")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

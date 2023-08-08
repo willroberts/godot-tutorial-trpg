@@ -18,7 +18,7 @@ public partial class Unit : Path2D
 	public Texture Skin;
 
 	[Export]
-	public  Vector2 SkinOffset = Vector2.Zero;
+	public Vector2 SkinOffset = Vector2.Zero;
 
 	[Export]
 	public float MoveSpeed = (float)600.0;
@@ -36,6 +36,8 @@ public partial class Unit : Path2D
 
 		_pathFollow = GetNode<PathFollow2D>("PathFollow2D");
 		_sprite = _pathFollow.GetNode<Sprite2D>("Sprite");
+		SetSkin(this.Skin as Texture2D);
+		SetSkinOffset(this.SkinOffset);
 		_animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
 		Vector2I gridPosition = Grid.CalculateGridPosition(Position);

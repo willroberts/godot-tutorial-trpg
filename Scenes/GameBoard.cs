@@ -101,7 +101,7 @@ public partial class GameBoard : Node2D
 		if (!_units.ContainsKey(cell)) { return; }
 
 		_activeUnit = _units[cell];
-		_activeUnit.IsSelected = true;
+		_activeUnit.SetIsSelected(true);
 		_walkableCells = GetWalkableCells(_activeUnit);
 		_unitOverlay.DrawCells(_walkableCells);
 		_unitPath.Initialize(_walkableCells);
@@ -109,7 +109,7 @@ public partial class GameBoard : Node2D
 
 	private void DeselectActiveUnit()
 	{
-		_activeUnit.IsSelected = false;
+		_activeUnit.SetIsSelected(false);
 		_unitOverlay.Clear();
 		_unitPath.Stop();
 	}

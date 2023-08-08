@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dax7xcwu00qcx"]
+[gd_scene load_steps=9 format=3 uid="uid://dax7xcwu00qcx"]
 
 [ext_resource type="PackedScene" uid="uid://bhmvga1in3xso" path="res://Scenes/Unit.tscn" id="2_1nv1w"]
 [ext_resource type="Script" path="res://Scenes/GameBoard.cs" id="2_ny2fk"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cix50x4lbdgwn" path="res://Scenes/UnitPath.tscn" id="3_aqy2x"]
 [ext_resource type="PackedScene" uid="uid://ceehdvbk1gr7u" path="res://Scenes/Cursor.tscn" id="3_fcu7f"]
 [ext_resource type="PackedScene" uid="uid://ddxl04qle3na4" path="res://Scenes/UnitOverlay.tscn" id="6_qf8yy"]
+[ext_resource type="Texture2D" uid="uid://dckmr0lmco10x" path="res://Assets/Units/squirrel.png" id="6_ww2c4"]
+[ext_resource type="Texture2D" uid="uid://c086yg5ekmurg" path="res://Assets/Units/bear.png" id="7_0bjr0"]
 
 [node name="Main" type="Node2D"]
 
@@ -23,10 +25,15 @@ y_sort_enabled = true
 [node name="Unit" parent="GameBoard" instance=ExtResource("2_1nv1w")]
 y_sort_enabled = true
 position = Vector2(523, 366)
+Skin = ExtResource("6_ww2c4")
 SkinOffset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_fcu7f")]
 y_sort_enabled = true
+
+[node name="Enemy" parent="GameBoard" instance=ExtResource("2_1nv1w")]
+position = Vector2(836, 610)
+Skin = ExtResource("7_0bjr0")
 
 [connection signal="AcceptPressed" from="GameBoard/Cursor" to="GameBoard" method="OnCursorAcceptPressed"]
 [connection signal="Moved" from="GameBoard/Cursor" to="GameBoard" method="OnCursorMoved"]
