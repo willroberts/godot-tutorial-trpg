@@ -20,4 +20,5 @@ then render an arrow showing the path. Clicking again will move the unit.
 ## Licenses
 
 Code: GPLv3
+
 Art Assets: CC-BY 4.0, from GDQuest and contributors (https://www.gdquest.com/)
