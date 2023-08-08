@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dax7xcwu00qcx"]
 
-[ext_resource type="PackedScene" uid="uid://bhmvga1in3xso" path="res://Unit.tscn" id="2_1nv1w"]
-[ext_resource type="Script" path="res://GameBoard.cs" id="2_ny2fk"]
-[ext_resource type="PackedScene" uid="uid://5cqvuggrfgng" path="res://Background/NewMap.tscn" id="2_y6f1r"]
-[ext_resource type="PackedScene" uid="uid://cix50x4lbdgwn" path="res://UnitPath.tscn" id="3_aqy2x"]
-[ext_resource type="PackedScene" uid="uid://ceehdvbk1gr7u" path="res://Cursor.tscn" id="3_fcu7f"]
-[ext_resource type="PackedScene" uid="uid://ddxl04qle3na4" path="res://UnitOverlay.tscn" id="6_qf8yy"]
+[ext_resource type="PackedScene" uid="uid://bhmvga1in3xso" path="res://Scenes/Unit.tscn" id="2_1nv1w"]
+[ext_resource type="Script" path="res://Scenes/GameBoard.cs" id="2_ny2fk"]
+[ext_resource type="PackedScene" uid="uid://5cqvuggrfgng" path="res://Scenes/Map.tscn" id="2_y6f1r"]
+[ext_resource type="PackedScene" uid="uid://cix50x4lbdgwn" path="res://Scenes/UnitPath.tscn" id="3_aqy2x"]
+[ext_resource type="PackedScene" uid="uid://ceehdvbk1gr7u" path="res://Scenes/Cursor.tscn" id="3_fcu7f"]
+[ext_resource type="PackedScene" uid="uid://ddxl04qle3na4" path="res://Scenes/UnitOverlay.tscn" id="6_qf8yy"]
 
 [node name="Main" type="Node2D"]
 
