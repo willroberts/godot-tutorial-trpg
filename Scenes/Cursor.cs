@@ -37,6 +37,9 @@ public partial class Cursor : Node2D
 		else if (@event.IsActionPressed("click") ||
 				 @event.IsActionPressed("ui_accept"))
 		{
+			// FIXME: Signal not working.
+			// E Can't emit non-existing signal "accept_pressed".
+			// <C++ Error> Condition "!signal_is_valid && !script.is_null() && !Ref<Script>(script)->has_script_signal(p_name)" is true. Returning: ERR_UNAVAILABLE
 			EmitSignal("accept_pressed", Cell);
 			GetViewport().SetInputAsHandled();
 		}
