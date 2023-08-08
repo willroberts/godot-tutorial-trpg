@@ -37,7 +37,7 @@ public partial class Cursor : Node2D
 			// FIXME: Signal not working.
 			// E Can't emit non-existing signal "accept_pressed".
 			// <C++ Error> Condition "!signal_is_valid && !script.is_null() && !Ref<Script>(script)->has_script_signal(p_name)" is true. Returning: ERR_UNAVAILABLE
-			EmitSignal("accept_pressed", Cell);
+			EmitSignal("AcceptPressed", Cell);
 			GetViewport().SetInputAsHandled();
 		}
 
@@ -71,7 +71,7 @@ public partial class Cursor : Node2D
 
 		Cell = newCell;
 		Position = Grid.CalculateMapPosition(Cell);
-		EmitSignal("moved", Cell);
+		EmitSignal("Moved", Cell);
 		_timer.Start();
 	}
 }

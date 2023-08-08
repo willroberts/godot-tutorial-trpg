@@ -5,6 +5,9 @@ using System;
 [GlobalClass, Tool]
 public partial class Unit : Path2D
 {
+	[Signal]
+	public delegate void WalkFinishedEventHandler();
+
 	[Export]
 	public Grid Grid = ResourceLoader.Load("res://Resources/Grid.tres") as Grid;
 
@@ -51,7 +54,7 @@ public partial class Unit : Path2D
 			_pathFollow.Progress = 0.0F;
 			Position = Grid.CalculateMapPosition(Cell);
 			Curve.ClearPoints();
-			EmitSignal("walk_finished");
+			EmitSignal("WalkFinished");
 		}
 	}
 
