@@ -18,38 +18,38 @@ public partial class Grid : Resource
 	}
 
 	// Grid coordinates to Screen coordinates.
-	public Vector2 CalculateMapPosition(Vector2I GridPosition)
+	public Vector2 CalculateMapPosition(Vector2I gridPosition)
 	{
-		return GridPosition * CellSize + _halfSize;
+		return gridPosition * CellSize + _halfSize;
 	}
 
 	// Screen coordinates to Grid coordinates.
-	public Vector2I CalculateGridPosition(Vector2 MapPosition)
+	public Vector2I CalculateGridPosition(Vector2 mapPosition)
 	{
-		Vector2 Converted = (MapPosition / CellSize).Floor();
-		return new Vector2I((int)Converted.X, (int)Converted.Y);
+		Vector2 converted = (mapPosition / CellSize).Floor();
+		return new Vector2I((int)converted.X, (int)converted.Y);
 	}
 
-	public bool IsWithinBounds(Vector2I Coords)
+	public bool IsWithinBounds(Vector2I coords)
 	{
 		return (
-			Coords.X >= 0 &&
-			Coords.X < Size.X &&
-			Coords.Y >= 0 &&
-			Coords.Y < Size.Y
+			coords.X >= 0 &&
+			coords.X < Size.X &&
+			coords.Y >= 0 &&
+			coords.Y < Size.Y
 		);
 	}
 	
-	public Vector2I Clamped(Vector2I Coords)
+	public Vector2I Clamped(Vector2I coords)
 	{
-		return Coords.Clamp(
+		return coords.Clamp(
 			new(0, 0),
 			new(Size.X-1, Size.Y-1)
 		);
 	}
 	
-	public int AsIndex(Vector2I Cell)
+	public int AsIndex(Vector2I cell)
 	{
-		return Cell.X + Size.X * Cell.Y;
+		return cell.X + Size.X * cell.Y;
 	}
 }
