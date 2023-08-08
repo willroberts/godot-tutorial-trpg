@@ -36,10 +36,8 @@ public partial class GameBoard : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (_activeUnit == null) {
-			GD.Print("Error: _activeUnit was null");
-			return;
-		}
+		// Do nothing if a unit has not been selected.
+		if (_activeUnit == null) { return; }
 
 		if (@event.IsActionPressed("ui_cancel"))
 		{
