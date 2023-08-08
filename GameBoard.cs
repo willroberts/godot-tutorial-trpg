@@ -34,18 +34,18 @@ public partial class GameBoard : Node2D
 
 	public override void _Process(double delta) {}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (_ActiveUnit == null) { return; }
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (_ActiveUnit == null) { return; }
 
 		if (@event.IsActionPressed("ui_cancel"))
 		{
 			_DeselectActiveUnit();
 			_ClearActiveUnit();
 		}
-    }
+	}
 
-    public bool IsOccupied(Vector2I Cell)
+	public bool IsOccupied(Vector2I Cell)
 	{
 		if (_Units.ContainsKey(Cell))
 		{
@@ -207,4 +207,10 @@ public partial class GameBoard : Node2D
 		}
 		return Out;
 	}
+}
+
+
+private void _OnCursorMoved(Vector2 NewCell)
+{
+	// Replace with function body.
 }
