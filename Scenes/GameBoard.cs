@@ -47,11 +47,7 @@ public partial class GameBoard : Node2D
 
 	public bool IsOccupied(Vector2I Cell)
 	{
-		if (_Units.ContainsKey(Cell))
-		{
-			return true;
-		}
-		return false;
+		return _Units.ContainsKey(Cell);
 	}
 
 	private void _Reinitialize()
@@ -63,7 +59,7 @@ public partial class GameBoard : Node2D
 			Unit ThisUnit = Child as Unit;
 			if (ThisUnit == null) { continue; }
 
-			Vector2I Coords = new Vector2I(
+			Vector2I Coords = new(
 				(int)ThisUnit.Cell.X,
 				(int)ThisUnit.Cell.Y
 			);

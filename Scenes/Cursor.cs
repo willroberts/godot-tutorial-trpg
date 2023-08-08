@@ -34,8 +34,7 @@ public partial class Cursor : Node2D
 		{
 			Cell = Grid.CalculateGridPosition(evt.Position);
 		}
-		else if (@event.IsActionPressed("click") ||
-				 @event.IsActionPressed("ui_accept"))
+		else if (@event.IsActionPressed("click") || @event.IsActionPressed("ui_accept"))
 		{
 			// FIXME: Signal not working.
 			// E Can't emit non-existing signal "accept_pressed".
@@ -59,8 +58,12 @@ public partial class Cursor : Node2D
 
 	public override void _Draw()
 	{
-		DrawRect(new Rect2(-Grid.CellSize / 2, Grid.CellSize),
-				 Colors.AliceBlue, false, 2.0F);
+		DrawRect(
+			new Rect2(-Grid.CellSize / 2, Grid.CellSize),
+			Colors.AliceBlue,
+			false,
+			2.0F
+		);
 	}
 
 	public void SetCell(Vector2 Value)

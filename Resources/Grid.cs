@@ -29,11 +29,12 @@ public partial class Grid : Resource
 	
 	public bool IsWithinBounds(Vector2 Coords)
 	{
-		if (Coords.X >= 0 &&
+		if (
+			Coords.X >= 0 &&
 			Coords.X < Size.X &&
 			Coords.Y >= 0 &&
-			Coords.Y < Size.Y)
-		{
+			Coords.Y < Size.Y
+		) {
 			return true;	
 		}
 		

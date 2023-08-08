@@ -36,16 +36,12 @@ public partial class UnitPath : TileMap
 		*/
 	}
 
-	public override void _Process(double delta) {}
-
 	public void DrawPath(Vector2I StartCell, Vector2I EndCell)
 	{
 		Clear();
-		CurrentPath = ToVector2I(
-			new Array<Vector2>(
-				_Pathfinder.CalculatePointPath(StartCell, EndCell)
-			)
-		);
+		CurrentPath = ToVector2I(new Array<Vector2>(
+			_Pathfinder.CalculatePointPath(StartCell, EndCell)
+		));
 		foreach (Vector2I Cell in CurrentPath)
 		{
 			SetCell(0, Cell, 0, new Vector2I(0, 0), 0);

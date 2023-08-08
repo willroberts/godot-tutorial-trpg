@@ -38,7 +38,7 @@ public partial class Unit : Path2D
 		SetCell(Grid.CalculateGridPosition(Position));
 		Position = Grid.CalculateMapPosition(Cell);
 		
-		if (!Engine.IsEditorHint())	{ Curve = new Curve2D(); }
+		if (!Engine.IsEditorHint()) { Curve = new Curve2D(); }
 	}
 
 	public override void _Process(double delta)
@@ -63,14 +63,9 @@ public partial class Unit : Path2D
 	public void SetIsSelected(bool Value)
 	{
 		IsSelected = Value;
-		if (IsSelected)
-		{
-			_AnimPlayer.Play("selected");
-		}
-		else
-		{
-			_AnimPlayer.Play("idle");
-		}
+
+		if (IsSelected) { _AnimPlayer.Play("selected"); }
+		else { _AnimPlayer.Play("idle"); }
 	}
 
 	public async void SetSkin(Texture2D Value)
