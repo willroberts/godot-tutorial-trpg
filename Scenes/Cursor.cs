@@ -28,40 +28,36 @@ public partial class Cursor : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
+		// Handle mouse movement.
 		if (@event is InputEventMouseMotion evt)
 		{
-			Cell = Grid.CalculateGridPosition(evt.Position);
+			SetCell(Grid.CalculateGridPosition(evt.Position));
+			return;
 		}
-		else if (@event.IsActionPressed("click") || @event.IsActionPressed("ui_accept"))
+
+		// Handle mouse click.
+		if (@event.IsActionPressed("click") || @event.IsActionPressed("ui_accept"))
 		{
-			// FIXME: Signal not working.
-			// E Can't emit non-existing signal "accept_pressed".
-			// <C++ Error> Condition "!signal_is_valid && !script.is_null() && !Ref<Script>(script)->has_script_signal(p_name)" is true. Returning: ERR_UNAVAILABLE
 			EmitSignal("AcceptPressed", Cell);
 			GetViewport().SetInputAsHandled();
+			return;
 		}
 
+		// Handle keyboard input.
 		bool shouldMove = @event.IsPressed();
-		if (@event.IsEcho())
-		{
-			shouldMove = shouldMove && _timer.IsStopped();
-		}
+		if (@event.IsEcho()) { shouldMove = shouldMove && _timer.IsStopped(); }
 		if (!shouldMove) { return; }
 
-		if (@event.IsAction("ui_left")) { Cell = Vector2I.Left; }
-		if (@event.IsAction("ui_right")) { Cell = Vector2I.Right; }
-		if (@event.IsAction("ui_up")) { Cell = Vector2I.Up; }
-		if (@event.IsAction("ui_down")) { Cell = Vector2I.Down; }
+		if (@event.IsAction("ui_left")) { Cell += Vector2I.Left; }
+		if (@event.IsAction("ui_right")) { Cell += Vector2I.Right; }
+		if (@event.IsAction("ui_up")) {  Cell += Vector2I.Up; }
+		if (@event.IsAction("ui_down")) { Cell += Vector2I.Down; }
 	}
 
 	public override void _Draw()
 	{
-		DrawRect(
-			new Rect2(-Grid.CellSize / 2, Grid.CellSize),
-			Colors.AliceBlue,
-			false,
-			2.0F
-		);
+		Rect2 rect = new(-Grid.CellSize / 2, Grid.CellSize);
+		DrawRect(rect, Colors.AliceBlue, false, 2.0F);
 	}
 
 	public void SetCell(Vector2I value)

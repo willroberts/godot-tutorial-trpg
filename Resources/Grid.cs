@@ -5,7 +5,7 @@ using System;
 public partial class Grid : Resource
 {
 	[Export]
-	public Vector2I Size = new(20, 20);
+	public Vector2I Size = new(16, 9);
 
 	[Export]
 	public Vector2I CellSize = new(80, 80);
@@ -43,7 +43,7 @@ public partial class Grid : Resource
 	public Vector2I Clamped(Vector2I coords)
 	{
 		return coords.Clamp(
-			new(0, 0),
+			Vector2I.Zero,
 			new(Size.X-1, Size.Y-1)
 		);
 	}

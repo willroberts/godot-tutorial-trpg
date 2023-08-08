@@ -28,7 +28,7 @@ public partial class GameBoard : Node2D
 
 		if (OS.HasFeature("debugmode"))
 		{
-			GD.Print(_units);
+			GD.Print("[DEBUG] GameBoard: Units: ", _units);
 			Unit testUnit = GetNode<Unit>("Unit");
 			_unitOverlay.DrawCells(GetWalkableCells(testUnit));
 		}
@@ -57,7 +57,7 @@ public partial class GameBoard : Node2D
 
 		foreach (Node child in GetChildren())
 		{
-            if (child is not Unit unit) { continue; }
+			if (child is not Unit unit) { continue; }
 			_units[unit.Cell] = unit;
 		}
 	}

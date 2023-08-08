@@ -9,7 +9,7 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="NewMap" parent="." instance=ExtResource("2_y6f1r")]
+[node name="Map" parent="." instance=ExtResource("2_y6f1r")]
 
 [node name="GameBoard" type="Node2D" parent="."]
 script = ExtResource("2_ny2fk")

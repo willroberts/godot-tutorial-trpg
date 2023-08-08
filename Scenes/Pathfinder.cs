@@ -37,7 +37,7 @@ public partial class Pathfinder : RefCounted
             return UnpackArray(_aStar.GetPointPath(startIndex, endIndex));
         }
 
-        GD.Print("Error: Failed to get point path from AStar");
+        GD.Print("[ERROR] Pathfinder: Failed to get point path from AStar");
         return new Array<Vector2I>();
     }
 

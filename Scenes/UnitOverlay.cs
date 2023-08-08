@@ -10,7 +10,7 @@ public partial class UnitOverlay : TileMap
 		Clear();
 		foreach (Vector2I cell in cells)
 		{
-			SetCell(0, cell, 0, new Vector2I(0, 0), 0);
+			SetCell(0, cell, 0, Vector2I.Zero, 0);
 		}
 	}
 }

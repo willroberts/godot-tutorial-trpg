@@ -40,11 +40,16 @@ public partial class UnitPath : TileMap
 	{
 		Clear();
 		CurrentPath = _pathfinder.CalculatePointPath(startCell, endCell);
+		if (CurrentPath.Count == 0)
+		{
+			GD.Print("[ERROR] UnitPath: Pathfinder returned an empty path");
+			return;
+		}
 		foreach (Vector2I cell in CurrentPath)
 		{
-			SetCell(0, cell, 0, new Vector2I(0, 0), 0);
+			SetCell(0, cell, 0, Vector2I.Zero, 0);
 		}
-		SetCellsTerrainConnect(0, new Array<Vector2I>(CurrentPath), 0, 0);
+		SetCellsTerrainConnect(0, CurrentPath, 0, 0);
 	}
 
 	public void Stop()

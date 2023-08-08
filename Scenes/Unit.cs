@@ -38,7 +38,8 @@ public partial class Unit : Path2D
 		_sprite = _pathFollow.GetNode<Sprite2D>("Sprite");
 		_animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
-		SetCell(Grid.CalculateGridPosition(Position));
+		Vector2I gridPosition = Grid.CalculateGridPosition(Position);
+		SetCell(gridPosition);
 		Position = Grid.CalculateMapPosition(Cell);
 		
 		if (!Engine.IsEditorHint()) { Curve = new Curve2D(); }
@@ -51,7 +52,7 @@ public partial class Unit : Path2D
 		if (_pathFollow.ProgressRatio >= 1.0)
 		{
 			SetIsWalking(false);
-			_pathFollow.Progress = 0.0F;
+			_pathFollow.Progress = 0.0F; // FIXME: Something wrong with curve interval?
 			Position = Grid.CalculateMapPosition(Cell);
 			Curve.ClearPoints();
 			EmitSignal("WalkFinished");
@@ -96,7 +97,7 @@ public partial class Unit : Path2D
 	public void WalkAlong(Array<Vector2I> path)
 	{
 		if (path.Count == 0) {
-			GD.Print("Error: Empty path provided to WalkAlong()");
+			GD.Print("[ERROR] Unit: Empty path provided to WalkAlong()");
 			return;
 		}
 		
