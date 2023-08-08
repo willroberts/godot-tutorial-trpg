@@ -57,24 +57,13 @@ public partial class GameBoard : Node2D
 		foreach (Node Child in GetChildren())
 		{
             if (Child is not Unit ThisUnit) { continue; }
-
-            Vector2I Coords = new(
-				(int)ThisUnit.Cell.X,
-				(int)ThisUnit.Cell.Y
-			);
-			_Units[Coords] = ThisUnit;
+			_Units[ThisUnit.Cell] = ThisUnit;
 		}
 	}
 
 	public Array<Vector2I> GetWalkableCells(Unit ThisUnit)
 	{
-		return _FloodFill(
-			new Vector2I(
-				(int)ThisUnit.Cell.X,
-				(int)ThisUnit.Cell.Y
-			),
-			ThisUnit.MoveRange
-		);
+		return _FloodFill(ThisUnit.Cell, ThisUnit.MoveRange);
 	}
 
 	private Array<Vector2I> _FloodFill(Vector2I Cell, int MaxDistance)
@@ -134,10 +123,7 @@ public partial class GameBoard : Node2D
 	{
 		if (IsOccupied(NewCell) || !_WalkableCells.Contains(NewCell)) { return; }
 
-		_Units.Remove(new Vector2I(
-			(int)_ActiveUnit.Cell.X,
-			(int)_ActiveUnit.Cell.Y
-		));
+		_Units.Remove(_ActiveUnit.Cell);
 		_Units[NewCell] = _ActiveUnit;
 		_DeselectActiveUnit();
 		_ActiveUnit.WalkAlong(_UnitPath.CurrentPath);
@@ -149,35 +135,17 @@ public partial class GameBoard : Node2D
 	{
 		if (_ActiveUnit != null && _ActiveUnit.IsSelected)
 		{
-			_UnitPath.DrawPath(
-				new Vector2I(
-					(int)_ActiveUnit.Cell.X,
-					(int)_ActiveUnit.Cell.Y
-				),
-				new Vector2I(
-					(int)NewCell.X,
-					(int)NewCell.Y
-				)
-			);
+			_UnitPath.DrawPath(_ActiveUnit.Cell, NewCell);
 		}
 	}
 
 	private void _OnCursorAcceptPressed(Vector2I Cell)
 	{
 		if (_ActiveUnit == null) {
-			_SelectUnit(new Vector2I(
-				(int)Cell.X,
-				(int)Cell.Y
-			));
+			_SelectUnit(Cell);
 			return;
 		}
 
-		if (_ActiveUnit.IsSelected)
-		{
-			_MoveActiveUnit(new Vector2I(
-				(int)Cell.X,
-				(int)Cell.Y
-			));
-		}
+		if (_ActiveUnit.IsSelected) { _MoveActiveUnit(Cell); }
 	}
 }
