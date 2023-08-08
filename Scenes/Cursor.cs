@@ -41,12 +41,12 @@ public partial class Cursor : Node2D
 			GetViewport().SetInputAsHandled();
 		}
 
-		bool ShouldMove = @event.IsPressed();
+		bool shouldMove = @event.IsPressed();
 		if (@event.IsEcho())
 		{
-			ShouldMove = ShouldMove && _timer.IsStopped();
+			shouldMove = shouldMove && _timer.IsStopped();
 		}
-		if (!ShouldMove) { return; }
+		if (!shouldMove) { return; }
 
 		if (@event.IsAction("ui_left")) { Cell = Vector2I.Left; }
 		if (@event.IsAction("ui_right")) { Cell = Vector2I.Right; }
@@ -64,12 +64,12 @@ public partial class Cursor : Node2D
 		);
 	}
 
-	public void SetCell(Vector2I Value)
+	public void SetCell(Vector2I value)
 	{
-		Vector2I NewCell = Grid.Clamped(Value);
-		if (NewCell.Equals(Cell)) { return; }
+		Vector2I newCell = Grid.Clamped(value);
+		if (newCell.Equals(Cell)) { return; }
 
-		Cell = NewCell;
+		Cell = newCell;
 		Position = Grid.CalculateMapPosition(Cell);
 		EmitSignal("moved", Cell);
 		_timer.Start();

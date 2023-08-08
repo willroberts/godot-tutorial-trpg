@@ -16,68 +16,68 @@ public partial class Pathfinder : RefCounted
 
     private AStar2D _aStar = new AStar2D();
 
-    public Pathfinder(Grid Grid, Array<Vector2I> WalkableCells)
+    public Pathfinder(Grid grid, Array<Vector2I> walkableCells)
     {
-        _grid = Grid;
-        Dictionary<Vector2I, int> CellMappings = new();
-        foreach (Vector2I Cell in WalkableCells)
+        _grid = grid;
+        Dictionary<Vector2I, int> cellMappings = new();
+        foreach (Vector2I cell in walkableCells)
         {
-            CellMappings[Cell] = _grid.AsIndex(Cell);
+            cellMappings[cell] = _grid.AsIndex(cell);
         }
-        AddAndConnectPoints(CellMappings);
+        AddAndConnectPoints(cellMappings);
     }
 
-    public Array<Vector2I> CalculatePointPath(Vector2I Start, Vector2I End)
+    public Array<Vector2I> CalculatePointPath(Vector2I start, Vector2I end)
     {
-        int StartIndex = _grid.AsIndex(Start);
-        int EndIndex = _grid.AsIndex(End);
-        if (_aStar.HasPoint(StartIndex) && _aStar.HasPoint(EndIndex))
+        int startIndex = _grid.AsIndex(start);
+        int endIndex = _grid.AsIndex(end);
+        if (_aStar.HasPoint(startIndex) && _aStar.HasPoint(endIndex))
         {
-            return UnpackArray(_aStar.GetPointPath(StartIndex, EndIndex));
+            return UnpackArray(_aStar.GetPointPath(startIndex, endIndex));
         }
         return new Array<Vector2I>();
     }
 
-    private void AddAndConnectPoints(Dictionary<Vector2I, int> CellMappings)
+    private void AddAndConnectPoints(Dictionary<Vector2I, int> cellMappings)
     {
-        foreach (var (Key, Value) in CellMappings)
+        foreach (Vector2I cell in cellMappings.Keys)
         {
-            _aStar.AddPoint(CellMappings[Key], Key);
+            _aStar.AddPoint(cellMappings[cell], cell);
         }
-        foreach (var (Key, Value) in CellMappings)
+        foreach (Vector2I cell in cellMappings.Keys)
         {
-            foreach (int NeighborIndex in FindNeighborIndices(Key, CellMappings))
+            foreach (int neighborIndex in FindNeighborIndices(cell, cellMappings))
             {
-                _aStar.ConnectPoints(CellMappings[Key], NeighborIndex);
+                _aStar.ConnectPoints(cellMappings[cell], neighborIndex);
             }
         }
     }
 
-    private Array<int> FindNeighborIndices(Vector2I Cell, Dictionary<Vector2I, int> CellMappings)
+    private Array<int> FindNeighborIndices(Vector2I cell, Dictionary<Vector2I, int> cellMappings)
     {
-        Array<int> Result = new();
-        foreach (Vector2I Direction in Directions)
+        Array<int> result = new();
+        foreach (Vector2I direction in Directions)
         {
-            Vector2I Neighbor = Cell + Direction;
-            if (!CellMappings.ContainsKey(Neighbor)) { continue; }
+            Vector2I neighbor = cell + direction;
+            if (!cellMappings.ContainsKey(neighbor)) { continue; }
 
-            if (!_aStar.ArePointsConnected(CellMappings[Cell], CellMappings[Neighbor]))
+            if (!_aStar.ArePointsConnected(cellMappings[cell], cellMappings[neighbor]))
             {
-                Result.Add(CellMappings[Neighbor]);
+                result.Add(cellMappings[neighbor]);
             }
         }
-        return Result;
+        return result;
     }
 
     // Convenience function for converting Vector2[]] to Array<Vector2I>.
     // Useful when dealing with AStar, which returns Vector2 values.
-    private Array<Vector2I> UnpackArray(Vector2[] Input)
+    private Array<Vector2I> UnpackArray(Vector2[] input)
     {
-            Array<Vector2I> Converted = new();
-            foreach (Vector2 Value in Input)
+            Array<Vector2I> converted = new();
+            foreach (Vector2 value in input)
             {
-                Converted.Add(new Vector2I((int)Value.X, (int)Value.Y));
+                converted.Add(new Vector2I((int)value.X, (int)value.Y));
             }
-            return Converted;
+            return converted;
     }
 }

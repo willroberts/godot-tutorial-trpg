@@ -32,16 +32,12 @@ public partial class Grid : Resource
 
 	public bool IsWithinBounds(Vector2I Coords)
 	{
-		if (
+		return (
 			Coords.X >= 0 &&
 			Coords.X < Size.X &&
 			Coords.Y >= 0 &&
 			Coords.Y < Size.Y
-		) {
-			return true;	
-		}
-		
-		return false;
+		);
 	}
 	
 	public Vector2I Clamped(Vector2I Coords)

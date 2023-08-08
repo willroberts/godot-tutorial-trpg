@@ -55,58 +55,58 @@ public partial class Unit : Path2D
 		}
 	}
 
-	public void SetCell(Vector2I Value)
+	public void SetCell(Vector2I value)
 	{
-		Cell = Grid.Clamped(Value);
+		Cell = Grid.Clamped(value);
 	}
 
-	public void SetIsSelected(bool Value)
+	public void SetIsSelected(bool value)
 	{
-		IsSelected = Value;
+		IsSelected = value;
 
 		if (IsSelected) { _animPlayer.Play("selected"); }
 		else { _animPlayer.Play("idle"); }
 	}
 
-	public async void SetSkin(Texture2D Value)
+	public async void SetSkin(Texture2D value)
 	{
-		Skin = Value;
+		Skin = value;
 		if (_sprite == null)
 		{
 			// Wait until _Ready() is done.
 			await ToSignal(this, "ready");
 		}
-		_sprite.Texture = Value;
+		_sprite.Texture = value;
 	}
 
-	public async void SetSkinOffset(Vector2 Value)
+	public async void SetSkinOffset(Vector2 value)
 	{
-		SkinOffset = Value;
+		SkinOffset = value;
 		if (_sprite == null)
 		{
 			// Wait until _Ready() is done.
 			await ToSignal(this, "ready");
 		}
-		_sprite.Position = Value;
+		_sprite.Position = value;
 	}
 
-	public void WalkAlong(Array<Vector2I> Path)
+	public void WalkAlong(Array<Vector2I> path)
 	{
-		if (Path.Count == 0) { return; }
+		if (path.Count == 0) { return; }
 		
 		Curve.AddPoint(Vector2.Zero);
-		foreach (Vector2I Point in Path)
+		foreach (Vector2I point in path)
 		{
-			Curve.AddPoint(Grid.CalculateMapPosition(Point) - Position);
+			Curve.AddPoint(Grid.CalculateMapPosition(point) - Position);
 		}
 		
-		SetCell(Path[Path.Count-1]);
+		SetCell(path[path.Count-1]);
 		SetIsWalking(true);
 	}
 
-	private void SetIsWalking(bool Value)
+	private void SetIsWalking(bool value)
 	{
-		_isWalking = Value;
+		_isWalking = value;
 		SetProcess(_isWalking);
 	}
 }

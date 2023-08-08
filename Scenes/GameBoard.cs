@@ -43,61 +43,61 @@ public partial class GameBoard : Node2D
 		}
 	}
 
-	public bool IsOccupied(Vector2I Cell)
+	public bool IsOccupied(Vector2I cell)
 	{
-		return _units.ContainsKey(Cell);
+		return _units.ContainsKey(cell);
 	}
 
 	private void Reinitialize()
 	{
 		_units.Clear();
 
-		foreach (Node Child in GetChildren())
+		foreach (Node child in GetChildren())
 		{
-            if (Child is not Unit ThisUnit) { continue; }
-			_units[ThisUnit.Cell] = ThisUnit;
+            if (child is not Unit unit) { continue; }
+			_units[unit.Cell] = unit;
 		}
 	}
 
-	public Array<Vector2I> GetWalkableCells(Unit ThisUnit)
+	public Array<Vector2I> GetWalkableCells(Unit unit)
 	{
-		return FloodFill(ThisUnit.Cell, ThisUnit.MoveRange);
+		return FloodFill(unit.Cell, unit.MoveRange);
 	}
 
-	private Array<Vector2I> FloodFill(Vector2I Cell, int MaxDistance)
+	private Array<Vector2I> FloodFill(Vector2I cell, int maxDistance)
 	{
-		Array<Vector2I> Result = new();
+		Array<Vector2I> result = new();
 
 		System.Collections.Generic.Stack<Vector2I> CellStack = new();
-		CellStack.Push(Cell);
+		CellStack.Push(cell);
 		while (CellStack.Count != 0)
 		{
-			Vector2I CurrentCell = CellStack.Pop();
-			if (!Grid.IsWithinBounds(CurrentCell)) { continue; }
-			if (Result.Contains(CurrentCell)) { continue; }
+			Vector2I currentCell = CellStack.Pop();
+			if (!Grid.IsWithinBounds(currentCell)) { continue; }
+			if (result.Contains(currentCell)) { continue; }
 
-			Vector2I Difference = (CurrentCell - Cell).Abs();
-			int Distance = Difference.X + Difference.Y;
-			if (Distance > MaxDistance) { continue; }
+			Vector2I difference = (currentCell - cell).Abs();
+			int distance = difference.X + difference.Y;
+			if (distance > maxDistance) { continue; }
 
-			Result.Add(CurrentCell);
-			foreach (Vector2I Direction in Directions)
+			result.Add(currentCell);
+			foreach (Vector2I direction in Directions)
 			{
-				Vector2I Coords = CurrentCell + Direction;
-				if (IsOccupied(Coords)) { continue; }
-				if (Result.Contains(Coords)) { continue; }
-				CellStack.Push(Coords);
+				Vector2I coords = currentCell + direction;
+				if (IsOccupied(coords)) { continue; }
+				if (result.Contains(coords)) { continue; }
+				CellStack.Push(coords);
 			}
 		}
 
-		return Result;
+		return result;
 	}
 
-	private void SelectUnit(Vector2I Cell)
+	private void SelectUnit(Vector2I cell)
 	{
-		if (!_units.ContainsKey(Cell)) { return; }
+		if (!_units.ContainsKey(cell)) { return; }
 
-		_activeUnit = _units[Cell];
+		_activeUnit = _units[cell];
 		_activeUnit.IsSelected = true;
 		_walkableCells = GetWalkableCells(_activeUnit);
 		_unitOverlay.DrawCells(_walkableCells);
@@ -117,35 +117,36 @@ public partial class GameBoard : Node2D
 		_walkableCells.Clear();
 	}
 
-	private async void MoveActiveUnit(Vector2I NewCell)
+	private async void MoveActiveUnit(Vector2I newCell)
 	{
-		if (IsOccupied(NewCell) || !_walkableCells.Contains(NewCell)) { return; }
+		if (IsOccupied(newCell) || !_walkableCells.Contains(newCell)) { return; }
 
 		_units.Remove(_activeUnit.Cell);
-		_units[NewCell] = _activeUnit;
+		_units[newCell] = _activeUnit;
 		DeselectActiveUnit();
+
 		_activeUnit.WalkAlong(_unitPath.CurrentPath);
 		await ToSignal(_activeUnit, "walk_finished");
 		ClearActiveUnit();
 	}
 
 	// Signal connected to GameBoard.Cursor.
-	private void OnCursorMoved(Vector2I NewCell)
+	private void OnCursorMoved(Vector2I newCell)
 	{
 		if (_activeUnit != null && _activeUnit.IsSelected)
 		{
-			_unitPath.DrawPath(_activeUnit.Cell, NewCell);
+			_unitPath.DrawPath(_activeUnit.Cell, newCell);
 		}
 	}
 
 	// Signal connected to GameBoard.Cursor.
-	private void OnCursorAcceptPressed(Vector2I Cell)
+	private void OnCursorAcceptPressed(Vector2I cell)
 	{
 		if (_activeUnit == null) {
-			SelectUnit(Cell);
+			SelectUnit(cell);
 			return;
 		}
 
-		if (_activeUnit.IsSelected) { MoveActiveUnit(Cell); }
+		if (_activeUnit.IsSelected) { MoveActiveUnit(cell); }
 	}
 }

@@ -12,37 +12,37 @@ public partial class UnitPath : TileMap
 	private Pathfinder _pathfinder;
 	public Array<Vector2I> CurrentPath;
 
-	public void Initialize(Array<Vector2I> WalkableCells)
+	public void Initialize(Array<Vector2I> walkableCells)
 	{
-		_pathfinder = new Pathfinder(Grid, WalkableCells);
+		_pathfinder = new Pathfinder(Grid, walkableCells);
 	}
 
 	public override void _Ready()
 	{
 		// Debugging.
 		/*
-		Vector2 StartRect = new Vector2(4, 4);
-		Vector2 EndRect = new Vector2(10, 8);
-		Array<Vector2I> Points = new();
-		foreach (int X in Enumerable.Range(0, (int)(EndRect.X - StartRect.X + 1)))
+		Vector2 startRect = new Vector2(4, 4);
+		Vector2 endRect = new Vector2(10, 8);
+		Array<Vector2I> points = new();
+		foreach (int x in Enumerable.Range(0, (int)(endRect.X - startRect.X + 1)))
 		{
-			foreach (int Y in Enumerable.Range(0, (int)(EndRect.Y - StartRect.Y + 1)))
+			foreach (int y in Enumerable.Range(0, (int)(endRect.Y - startRect.Y + 1)))
 			{
-				Points.Add(StartRect + new Vector2(X, Y));
+				points.Add(startRect + new Vector2(x, y));
 			}
 		}
-		Initialize(Points);
-		DrawPath(new Vector2I((int)StartRect.X, (int)StartRect.Y), new Vector2I(8, 7));
+		Initialize(points);
+		DrawPath(new Vector2I((int)startRect.X, (int)startRect.Y), new Vector2I(8, 7));
 		*/
 	}
 
-	public void DrawPath(Vector2I StartCell, Vector2I EndCell)
+	public void DrawPath(Vector2I startCell, Vector2I endCell)
 	{
 		Clear();
-		CurrentPath = _pathfinder.CalculatePointPath(StartCell, EndCell);
-		foreach (Vector2I Cell in CurrentPath)
+		CurrentPath = _pathfinder.CalculatePointPath(startCell, endCell);
+		foreach (Vector2I cell in CurrentPath)
 		{
-			SetCell(0, Cell, 0, new Vector2I(0, 0), 0);
+			SetCell(0, cell, 0, new Vector2I(0, 0), 0);
 		}
 		SetCellsTerrainConnect(0, new Array<Vector2I>(CurrentPath), 0, 0);
 	}
