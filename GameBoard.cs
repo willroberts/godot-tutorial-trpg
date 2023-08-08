@@ -34,7 +34,18 @@ public partial class GameBoard : Node2D
 
 	public override void _Process(double delta) {}
 
-	public bool IsOccupied(Vector2I Cell)
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (_ActiveUnit == null) { return; }
+
+		if (@event.IsActionPressed("ui_cancel"))
+		{
+			_DeselectActiveUnit();
+			_ClearActiveUnit();
+		}
+    }
+
+    public bool IsOccupied(Vector2I Cell)
 	{
 		if (_Units.ContainsKey(Cell))
 		{
@@ -137,6 +148,42 @@ public partial class GameBoard : Node2D
 		_ActiveUnit.WalkAlong(ToVector2(_UnitPath.CurrentPath));
 		await ToSignal(_ActiveUnit, "walk_finished");
 		_ClearActiveUnit();
+	}
+
+	private void _OnCursorMoved(Vector2 NewCell)
+	{
+		if (_ActiveUnit != null && _ActiveUnit.IsSelected)
+		{
+			_UnitPath.DrawPath(
+				new Vector2I(
+					(int)_ActiveUnit.Cell.X,
+					(int)_ActiveUnit.Cell.Y
+				),
+				new Vector2I(
+					(int)NewCell.X,
+					(int)NewCell.Y
+				)
+			);
+		}
+	}
+
+	private void _OnCursorAcceptPressed(Vector2 Cell)
+	{
+		if (_ActiveUnit == null) {
+			_SelectUnit(new Vector2I(
+				(int)Cell.X,
+				(int)Cell.Y
+			));
+			return;
+		}
+
+		if (_ActiveUnit.IsSelected)
+		{
+			_MoveActiveUnit(new Vector2I(
+				(int)Cell.X,
+				(int)Cell.Y
+			));
+		}
 	}
 
 	// Dumb and inefficient. Should have started with Vector2I from the onset.
