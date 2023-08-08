@@ -12,7 +12,7 @@ public partial class UnitPath : TileMap
 	private Pathfinder _Pathfinder;
 	public Array<Vector2I> CurrentPath;
 
-	public void Initialize(Array<Vector2> WalkableCells)
+	public void Initialize(Array<Vector2I> WalkableCells)
 	{
 		_Pathfinder = new Pathfinder(Grid, WalkableCells);
 	}
@@ -23,7 +23,7 @@ public partial class UnitPath : TileMap
 		/*
 		Vector2 StartRect = new Vector2(4, 4);
 		Vector2 EndRect = new Vector2(10, 8);
-		Array<Vector2> Points = new();
+		Array<Vector2I> Points = new();
 		foreach (int X in Enumerable.Range(0, (int)(EndRect.X - StartRect.X + 1)))
 		{
 			foreach (int Y in Enumerable.Range(0, (int)(EndRect.Y - StartRect.Y + 1)))
@@ -39,9 +39,7 @@ public partial class UnitPath : TileMap
 	public void DrawPath(Vector2I StartCell, Vector2I EndCell)
 	{
 		Clear();
-		CurrentPath = ToVector2I(new Array<Vector2>(
-			_Pathfinder.CalculatePointPath(StartCell, EndCell)
-		));
+		CurrentPath = _Pathfinder.CalculatePointPath(StartCell, EndCell);
 		foreach (Vector2I Cell in CurrentPath)
 		{
 			SetCell(0, Cell, 0, new Vector2I(0, 0), 0);
@@ -53,16 +51,5 @@ public partial class UnitPath : TileMap
 	{
 		_Pathfinder = null;
 		Clear();
-	}
-
-	// Dumb and inefficient. Should have started with Vector2I from the onset.
-	private Array<Vector2I> ToVector2I(Array<Vector2> Input)
-	{
-		Array<Vector2I> Out = new();
-		foreach (Vector2 V in Input)
-		{
-			Out.Add(new Vector2I((int)V.X, (int)V.Y));
-		}
-		return Out;
 	}
 }

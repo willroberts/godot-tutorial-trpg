@@ -5,10 +5,10 @@ using System;
 public partial class Cursor : Node2D
 {
 	[Signal]
-	public delegate void AcceptPressedEventHandler(Vector2 Cell);
+	public delegate void AcceptPressedEventHandler(Vector2I Cell);
 
 	[Signal]
-	public delegate void MovedEventHandler(Vector2 NewCell);
+	public delegate void MovedEventHandler(Vector2I NewCell);
 
 	[Export]
 	public Grid Grid = ResourceLoader.Load("res://Resources/Grid.tres") as Grid;
@@ -16,7 +16,7 @@ public partial class Cursor : Node2D
 	[Export]
 	public float UICooldown = 0.1F;
 
-	public Vector2 Cell = Vector2.Zero;
+	public Vector2I Cell = Vector2I.Zero;
 	private Timer _Timer;
 
 	public override void _Ready()
@@ -50,10 +50,10 @@ public partial class Cursor : Node2D
 		}
 		if (!ShouldMove) { return; }
 
-		if (@event.IsAction("ui_up")) { Cell = Vector2.Up; }
-		if (@event.IsAction("ui_down")) { Cell = Vector2.Down; }
-		if (@event.IsAction("ui_left")) { Cell = Vector2.Left; }
-		if (@event.IsAction("ui_right")) { Cell = Vector2.Right; }
+		if (@event.IsAction("ui_up")) { Cell = Vector2I.Up; }
+		if (@event.IsAction("ui_down")) { Cell = Vector2I.Down; }
+		if (@event.IsAction("ui_left")) { Cell = Vector2I.Left; }
+		if (@event.IsAction("ui_right")) { Cell = Vector2I.Right; }
 	}
 
 	public override void _Draw()
@@ -66,10 +66,10 @@ public partial class Cursor : Node2D
 		);
 	}
 
-	public void SetCell(Vector2 Value)
+	public void SetCell(Vector2I Value)
 	{
-		Vector2 NewCell = Grid.Clamped(Value);
-		if (NewCell.IsEqualApprox(Cell)) { return; }
+		Vector2I NewCell = Grid.Clamped(Value);
+		if (NewCell.Equals(Cell)) { return; }
 
 		Cell = NewCell;
 		Position = Grid.CalculateMapPosition(Cell);

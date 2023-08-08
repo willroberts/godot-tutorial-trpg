@@ -20,7 +20,7 @@ public partial class Unit : Path2D
 	[Export]
 	public float MoveSpeed = (float)600.0;
 
-	public Vector2 Cell = Vector2.Zero;
+	public Vector2I Cell = Vector2I.Zero;
 	public bool IsSelected = false;
 	private bool _IsWalking = false;
 	private Sprite2D _Sprite;
@@ -55,7 +55,7 @@ public partial class Unit : Path2D
 		}
 	}
 
-	public void SetCell(Vector2 Value)
+	public void SetCell(Vector2I Value)
 	{
 		Cell = Grid.Clamped(Value);
 	}
@@ -90,12 +90,12 @@ public partial class Unit : Path2D
 		_Sprite.Position = Value;
 	}
 
-	public void WalkAlong(Godot.Collections.Array<Vector2> Path)
+	public void WalkAlong(Array<Vector2I> Path)
 	{
 		if (Path.Count == 0) { return; }
 		
 		Curve.AddPoint(Vector2.Zero);
-		foreach (Vector2 Point in Path)
+		foreach (Vector2I Point in Path)
 		{
 			Curve.AddPoint(Grid.CalculateMapPosition(Point) - Position);
 		}

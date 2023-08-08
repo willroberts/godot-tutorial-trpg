@@ -56,10 +56,9 @@ public partial class GameBoard : Node2D
 
 		foreach (Node Child in GetChildren())
 		{
-			Unit ThisUnit = Child as Unit;
-			if (ThisUnit == null) { continue; }
+            if (Child is not Unit ThisUnit) { continue; }
 
-			Vector2I Coords = new(
+            Vector2I Coords = new(
 				(int)ThisUnit.Cell.X,
 				(int)ThisUnit.Cell.Y
 			);
@@ -115,7 +114,7 @@ public partial class GameBoard : Node2D
 		_ActiveUnit.IsSelected = true;
 		_WalkableCells = GetWalkableCells(_ActiveUnit);
 		_UnitOverlay.DrawCells(_WalkableCells);
-		_UnitPath.Initialize(ToVector2(_WalkableCells));
+		_UnitPath.Initialize(_WalkableCells);
 	}
 
 	private void _DeselectActiveUnit()
@@ -141,12 +140,12 @@ public partial class GameBoard : Node2D
 		));
 		_Units[NewCell] = _ActiveUnit;
 		_DeselectActiveUnit();
-		_ActiveUnit.WalkAlong(ToVector2(_UnitPath.CurrentPath));
+		_ActiveUnit.WalkAlong(_UnitPath.CurrentPath);
 		await ToSignal(_ActiveUnit, "walk_finished");
 		_ClearActiveUnit();
 	}
 
-	private void _OnCursorMoved(Vector2 NewCell)
+	private void _OnCursorMoved(Vector2I NewCell)
 	{
 		if (_ActiveUnit != null && _ActiveUnit.IsSelected)
 		{
@@ -163,7 +162,7 @@ public partial class GameBoard : Node2D
 		}
 	}
 
-	private void _OnCursorAcceptPressed(Vector2 Cell)
+	private void _OnCursorAcceptPressed(Vector2I Cell)
 	{
 		if (_ActiveUnit == null) {
 			_SelectUnit(new Vector2I(
@@ -180,27 +179,5 @@ public partial class GameBoard : Node2D
 				(int)Cell.Y
 			));
 		}
-	}
-
-	// Dumb and inefficient. Should have started with Vector2I from the onset.
-	private Array<Vector2> ToVector2(Array<Vector2I> Input)
-	{
-		Array<Vector2> Out = new();
-		foreach (Vector2I V in Input)
-		{
-			Out.Add(new Vector2(V.X, V.Y));
-		}
-		return Out;
-	}
-
-	// Dumb and inefficient. Should have started with Vector2I from the onset.
-	private Array<Vector2I> ToVector2I(Array<Vector2> Input)
-	{
-		Array<Vector2I> Out = new();
-		foreach (Vector2 V in Input)
-		{
-			Out.Add(new Vector2I((int)V.X, (int)V.Y));
-		}
-		return Out;
 	}
 }
