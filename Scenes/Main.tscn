@@ -23,6 +23,7 @@ y_sort_enabled = true
 [node name="Unit" parent="GameBoard" instance=ExtResource("2_1nv1w")]
 y_sort_enabled = true
 position = Vector2(523, 366)
+SkinOffset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_fcu7f")]
 y_sort_enabled = true

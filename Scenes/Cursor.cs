@@ -56,6 +56,9 @@ public partial class Cursor : Node2D
 
 	public override void _Draw()
 	{
+		// Return early if the Grid is not yet initialized to avoid error spam.
+		if (Grid == null) { return; }
+
 		Rect2 rect = new(-Grid.CellSize / 2, Grid.CellSize);
 		DrawRect(rect, Colors.AliceBlue, false, 2.0F);
 	}
