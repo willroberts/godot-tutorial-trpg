@@ -19,7 +19,7 @@ public partial class UnitPath : TileMap
 
 	public override void _Ready()
 	{
-		if (OS.HasFeature("DebugMode"))
+		if (OS.HasFeature("debugmode"))
 		{
 			Vector2I startRect = new(4, 4);
 			Vector2I endRect = new(10, 8);

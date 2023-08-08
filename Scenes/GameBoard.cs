@@ -26,7 +26,7 @@ public partial class GameBoard : Node2D
 		_unitPath = GetNode<UnitPath>("UnitPath");
 		Reinitialize();
 
-		if (OS.HasFeature("DebugMode"))
+		if (OS.HasFeature("debugmode"))
 		{
 			GD.Print(_units);
 			Unit testUnit = GetNode<Unit>("Unit");
