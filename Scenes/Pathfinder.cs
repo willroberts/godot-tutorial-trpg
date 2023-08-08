@@ -12,48 +12,48 @@ public partial class Pathfinder : RefCounted
         Vector2I.Down
     };
 
-    private Grid _Grid;
+    private Grid _grid;
 
-    private AStar2D _AStar = new AStar2D();
+    private AStar2D _aStar = new AStar2D();
 
     public Pathfinder(Grid Grid, Array<Vector2I> WalkableCells)
     {
-        _Grid = Grid;
+        _grid = Grid;
         Dictionary<Vector2I, int> CellMappings = new();
         foreach (Vector2I Cell in WalkableCells)
         {
-            CellMappings[Cell] = _Grid.AsIndex(Cell);
+            CellMappings[Cell] = _grid.AsIndex(Cell);
         }
-        _AddAndConnectPoints(CellMappings);
+        AddAndConnectPoints(CellMappings);
     }
 
     public Array<Vector2I> CalculatePointPath(Vector2I Start, Vector2I End)
     {
-        int StartIndex = _Grid.AsIndex(Start);
-        int EndIndex = _Grid.AsIndex(End);
-        if (_AStar.HasPoint(StartIndex) && _AStar.HasPoint(EndIndex))
+        int StartIndex = _grid.AsIndex(Start);
+        int EndIndex = _grid.AsIndex(End);
+        if (_aStar.HasPoint(StartIndex) && _aStar.HasPoint(EndIndex))
         {
-            return UnpackArray(_AStar.GetPointPath(StartIndex, EndIndex));
+            return UnpackArray(_aStar.GetPointPath(StartIndex, EndIndex));
         }
         return new Array<Vector2I>();
     }
 
-    private void _AddAndConnectPoints(Dictionary<Vector2I, int> CellMappings)
+    private void AddAndConnectPoints(Dictionary<Vector2I, int> CellMappings)
     {
         foreach (var (Key, Value) in CellMappings)
         {
-            _AStar.AddPoint(CellMappings[Key], Key);
+            _aStar.AddPoint(CellMappings[Key], Key);
         }
         foreach (var (Key, Value) in CellMappings)
         {
-            foreach (int NeighborIndex in _FindNeighborIndices(Key, CellMappings))
+            foreach (int NeighborIndex in FindNeighborIndices(Key, CellMappings))
             {
-                _AStar.ConnectPoints(CellMappings[Key], NeighborIndex);
+                _aStar.ConnectPoints(CellMappings[Key], NeighborIndex);
             }
         }
     }
 
-    private Array<int> _FindNeighborIndices(Vector2I Cell, Dictionary<Vector2I, int> CellMappings)
+    private Array<int> FindNeighborIndices(Vector2I Cell, Dictionary<Vector2I, int> CellMappings)
     {
         Array<int> Result = new();
         foreach (Vector2I Direction in Directions)
@@ -61,7 +61,7 @@ public partial class Pathfinder : RefCounted
             Vector2I Neighbor = Cell + Direction;
             if (!CellMappings.ContainsKey(Neighbor)) { continue; }
 
-            if (!_AStar.ArePointsConnected(CellMappings[Cell], CellMappings[Neighbor]))
+            if (!_aStar.ArePointsConnected(CellMappings[Cell], CellMappings[Neighbor]))
             {
                 Result.Add(CellMappings[Neighbor]);
             }

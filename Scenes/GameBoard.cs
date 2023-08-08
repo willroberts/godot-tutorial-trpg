@@ -14,57 +14,57 @@ public partial class GameBoard : Node2D
 	};
 
 	public Grid Grid = ResourceLoader.Load("res://Resources/Grid.tres") as Grid;
-	private Dictionary<Vector2I, Unit> _Units = new();
-	private Unit _ActiveUnit;
-	private Array<Vector2I> _WalkableCells;
-	private UnitOverlay _UnitOverlay;
-	private UnitPath _UnitPath;
+	private Dictionary<Vector2I, Unit> _units = new();
+	private Unit _activeUnit;
+	private Array<Vector2I> _walkableCells;
+	private UnitOverlay _unitOverlay;
+	private UnitPath _unitPath;
 
 	public override void _Ready()
 	{
-		_UnitOverlay = GetNode<UnitOverlay>("UnitOverlay");
-		_UnitPath = GetNode<UnitPath>("UnitPath");
+		_unitOverlay = GetNode<UnitOverlay>("UnitOverlay");
+		_unitPath = GetNode<UnitPath>("UnitPath");
 		Reinitialize();
 
 		// Debugging.
-		//GD.Print(_Units);
+		//GD.Print(_units);
 		//Unit _TestUnit = GetNode<Unit>("Unit");
-		//_UnitOverlay.DrawCells(GetWalkableCells(_TestUnit));
+		//_unitOverlay.DrawCells(GetWalkableCells(_TestUnit));
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (_ActiveUnit == null) { return; }
+		if (_activeUnit == null) { return; }
 
 		if (@event.IsActionPressed("ui_cancel"))
 		{
-			_DeselectActiveUnit();
-			_ClearActiveUnit();
+			DeselectActiveUnit();
+			ClearActiveUnit();
 		}
 	}
 
 	public bool IsOccupied(Vector2I Cell)
 	{
-		return _Units.ContainsKey(Cell);
+		return _units.ContainsKey(Cell);
 	}
 
 	private void Reinitialize()
 	{
-		_Units.Clear();
+		_units.Clear();
 
 		foreach (Node Child in GetChildren())
 		{
             if (Child is not Unit ThisUnit) { continue; }
-			_Units[ThisUnit.Cell] = ThisUnit;
+			_units[ThisUnit.Cell] = ThisUnit;
 		}
 	}
 
 	public Array<Vector2I> GetWalkableCells(Unit ThisUnit)
 	{
-		return _FloodFill(ThisUnit.Cell, ThisUnit.MoveRange);
+		return FloodFill(ThisUnit.Cell, ThisUnit.MoveRange);
 	}
 
-	private Array<Vector2I> _FloodFill(Vector2I Cell, int MaxDistance)
+	private Array<Vector2I> FloodFill(Vector2I Cell, int MaxDistance)
 	{
 		Array<Vector2I> Result = new();
 
@@ -93,57 +93,59 @@ public partial class GameBoard : Node2D
 		return Result;
 	}
 
-	private void _SelectUnit(Vector2I Cell)
+	private void SelectUnit(Vector2I Cell)
 	{
-		if (!_Units.ContainsKey(Cell)) { return; }
+		if (!_units.ContainsKey(Cell)) { return; }
 
-		_ActiveUnit = _Units[Cell];
-		_ActiveUnit.IsSelected = true;
-		_WalkableCells = GetWalkableCells(_ActiveUnit);
-		_UnitOverlay.DrawCells(_WalkableCells);
-		_UnitPath.Initialize(_WalkableCells);
+		_activeUnit = _units[Cell];
+		_activeUnit.IsSelected = true;
+		_walkableCells = GetWalkableCells(_activeUnit);
+		_unitOverlay.DrawCells(_walkableCells);
+		_unitPath.Initialize(_walkableCells);
 	}
 
-	private void _DeselectActiveUnit()
+	private void DeselectActiveUnit()
 	{
-		_ActiveUnit.IsSelected = false;
-		_UnitOverlay.Clear();
-		_UnitPath.Stop();
+		_activeUnit.IsSelected = false;
+		_unitOverlay.Clear();
+		_unitPath.Stop();
 	}
 
-	private void _ClearActiveUnit()
+	private void ClearActiveUnit()
 	{
-		_ActiveUnit = null;
-		_WalkableCells.Clear();
+		_activeUnit = null;
+		_walkableCells.Clear();
 	}
 
-	private async void _MoveActiveUnit(Vector2I NewCell)
+	private async void MoveActiveUnit(Vector2I NewCell)
 	{
-		if (IsOccupied(NewCell) || !_WalkableCells.Contains(NewCell)) { return; }
+		if (IsOccupied(NewCell) || !_walkableCells.Contains(NewCell)) { return; }
 
-		_Units.Remove(_ActiveUnit.Cell);
-		_Units[NewCell] = _ActiveUnit;
-		_DeselectActiveUnit();
-		_ActiveUnit.WalkAlong(_UnitPath.CurrentPath);
-		await ToSignal(_ActiveUnit, "walk_finished");
-		_ClearActiveUnit();
+		_units.Remove(_activeUnit.Cell);
+		_units[NewCell] = _activeUnit;
+		DeselectActiveUnit();
+		_activeUnit.WalkAlong(_unitPath.CurrentPath);
+		await ToSignal(_activeUnit, "walk_finished");
+		ClearActiveUnit();
 	}
 
-	private void _OnCursorMoved(Vector2I NewCell)
+	// Signal connected to GameBoard.Cursor.
+	private void OnCursorMoved(Vector2I NewCell)
 	{
-		if (_ActiveUnit != null && _ActiveUnit.IsSelected)
+		if (_activeUnit != null && _activeUnit.IsSelected)
 		{
-			_UnitPath.DrawPath(_ActiveUnit.Cell, NewCell);
+			_unitPath.DrawPath(_activeUnit.Cell, NewCell);
 		}
 	}
 
-	private void _OnCursorAcceptPressed(Vector2I Cell)
+	// Signal connected to GameBoard.Cursor.
+	private void OnCursorAcceptPressed(Vector2I Cell)
 	{
-		if (_ActiveUnit == null) {
-			_SelectUnit(Cell);
+		if (_activeUnit == null) {
+			SelectUnit(Cell);
 			return;
 		}
 
-		if (_ActiveUnit.IsSelected) { _MoveActiveUnit(Cell); }
+		if (_activeUnit.IsSelected) { MoveActiveUnit(Cell); }
 	}
 }

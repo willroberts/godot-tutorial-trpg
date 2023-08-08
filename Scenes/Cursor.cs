@@ -17,16 +17,14 @@ public partial class Cursor : Node2D
 	public float UICooldown = 0.1F;
 
 	public Vector2I Cell = Vector2I.Zero;
-	private Timer _Timer;
+	private Timer _timer;
 
 	public override void _Ready()
 	{
-		_Timer = GetNode<Timer>("Timer");
-		_Timer.WaitTime = UICooldown;
+		_timer = GetNode<Timer>("Timer");
+		_timer.WaitTime = UICooldown;
 		Position = Grid.CalculateMapPosition(Cell);
 	}
-
-	public override void _Process(double delta) {}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
@@ -46,7 +44,7 @@ public partial class Cursor : Node2D
 		bool ShouldMove = @event.IsPressed();
 		if (@event.IsEcho())
 		{
-			ShouldMove = ShouldMove && _Timer.IsStopped();
+			ShouldMove = ShouldMove && _timer.IsStopped();
 		}
 		if (!ShouldMove) { return; }
 
@@ -74,6 +72,6 @@ public partial class Cursor : Node2D
 		Cell = NewCell;
 		Position = Grid.CalculateMapPosition(Cell);
 		EmitSignal("moved", Cell);
-		_Timer.Start();
+		_timer.Start();
 	}
 }

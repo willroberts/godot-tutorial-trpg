@@ -22,18 +22,18 @@ public partial class Unit : Path2D
 
 	public Vector2I Cell = Vector2I.Zero;
 	public bool IsSelected = false;
-	private bool _IsWalking = false;
-	private Sprite2D _Sprite;
-	private AnimationPlayer _AnimPlayer;
-	private PathFollow2D _PathFollow;
+	private bool _isWalking = false;
+	private Sprite2D _sprite;
+	private AnimationPlayer _animPlayer;
+	private PathFollow2D _pathFollow;
 
 	public override void _Ready()
 	{
 		SetProcess(false);
 
-		_PathFollow = GetNode<PathFollow2D>("PathFollow2D");
-		_Sprite = _PathFollow.GetNode<Sprite2D>("Sprite");
-		_AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		_pathFollow = GetNode<PathFollow2D>("PathFollow2D");
+		_sprite = _pathFollow.GetNode<Sprite2D>("Sprite");
+		_animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
 		SetCell(Grid.CalculateGridPosition(Position));
 		Position = Grid.CalculateMapPosition(Cell);
@@ -43,12 +43,12 @@ public partial class Unit : Path2D
 
 	public override void _Process(double delta)
 	{
-		_PathFollow.Progress += MoveSpeed * (float)delta;
+		_pathFollow.Progress += MoveSpeed * (float)delta;
 		
-		if (_PathFollow.ProgressRatio >= 1.0)
+		if (_pathFollow.ProgressRatio >= 1.0)
 		{
-			_SetIsWalking(false);
-			_PathFollow.Progress = 0.0F;
+			SetIsWalking(false);
+			_pathFollow.Progress = 0.0F;
 			Position = Grid.CalculateMapPosition(Cell);
 			Curve.ClearPoints();
 			EmitSignal("walk_finished");
@@ -64,30 +64,30 @@ public partial class Unit : Path2D
 	{
 		IsSelected = Value;
 
-		if (IsSelected) { _AnimPlayer.Play("selected"); }
-		else { _AnimPlayer.Play("idle"); }
+		if (IsSelected) { _animPlayer.Play("selected"); }
+		else { _animPlayer.Play("idle"); }
 	}
 
 	public async void SetSkin(Texture2D Value)
 	{
 		Skin = Value;
-		if (_Sprite == null)
+		if (_sprite == null)
 		{
 			// Wait until _Ready() is done.
 			await ToSignal(this, "ready");
 		}
-		_Sprite.Texture = Value;
+		_sprite.Texture = Value;
 	}
 
 	public async void SetSkinOffset(Vector2 Value)
 	{
 		SkinOffset = Value;
-		if (_Sprite == null)
+		if (_sprite == null)
 		{
 			// Wait until _Ready() is done.
 			await ToSignal(this, "ready");
 		}
-		_Sprite.Position = Value;
+		_sprite.Position = Value;
 	}
 
 	public void WalkAlong(Array<Vector2I> Path)
@@ -101,12 +101,12 @@ public partial class Unit : Path2D
 		}
 		
 		SetCell(Path[Path.Count-1]);
-		_SetIsWalking(true);
+		SetIsWalking(true);
 	}
 
-	private void _SetIsWalking(bool Value)
+	private void SetIsWalking(bool Value)
 	{
-		_IsWalking = Value;
-		SetProcess(_IsWalking);
+		_isWalking = Value;
+		SetProcess(_isWalking);
 	}
 }

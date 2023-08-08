@@ -10,17 +10,17 @@ public partial class Grid : Resource
 	[Export]
 	public Vector2I CellSize = new(80, 80);
 
-	private Vector2I HalfSize;
+	private Vector2I _halfSize;
 
 	public Grid()
 	{
-		HalfSize = CellSize / 2;
+		_halfSize = CellSize / 2;
 	}
 
 	// Grid coordinates to Screen coordinates.
 	public Vector2 CalculateMapPosition(Vector2I GridPosition)
 	{
-		return GridPosition * CellSize + HalfSize;
+		return GridPosition * CellSize + _halfSize;
 	}
 
 	// Screen coordinates to Grid coordinates.

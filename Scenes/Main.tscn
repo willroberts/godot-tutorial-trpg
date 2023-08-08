@@ -27,5 +27,5 @@ position = Vector2(523, 366)
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_fcu7f")]
 y_sort_enabled = true
 
-[connection signal="AcceptPressed" from="GameBoard/Cursor" to="GameBoard" method="_OnCursorAcceptPressed"]
-[connection signal="Moved" from="GameBoard/Cursor" to="GameBoard" method="_OnCursorMoved"]
+[connection signal="AcceptPressed" from="GameBoard/Cursor" to="GameBoard" method="OnCursorAcceptPressed"]
+[connection signal="Moved" from="GameBoard/Cursor" to="GameBoard" method="OnCursorMoved"]

@@ -9,12 +9,12 @@ public partial class UnitPath : TileMap
 	[Export]
 	public Grid Grid = ResourceLoader.Load("res://Resources/Grid.tres") as Grid;
 
-	private Pathfinder _Pathfinder;
+	private Pathfinder _pathfinder;
 	public Array<Vector2I> CurrentPath;
 
 	public void Initialize(Array<Vector2I> WalkableCells)
 	{
-		_Pathfinder = new Pathfinder(Grid, WalkableCells);
+		_pathfinder = new Pathfinder(Grid, WalkableCells);
 	}
 
 	public override void _Ready()
@@ -39,7 +39,7 @@ public partial class UnitPath : TileMap
 	public void DrawPath(Vector2I StartCell, Vector2I EndCell)
 	{
 		Clear();
-		CurrentPath = _Pathfinder.CalculatePointPath(StartCell, EndCell);
+		CurrentPath = _pathfinder.CalculatePointPath(StartCell, EndCell);
 		foreach (Vector2I Cell in CurrentPath)
 		{
 			SetCell(0, Cell, 0, new Vector2I(0, 0), 0);
@@ -49,7 +49,7 @@ public partial class UnitPath : TileMap
 
 	public void Stop()
 	{
-		_Pathfinder = null;
+		_pathfinder = null;
 		Clear();
 	}
 }
