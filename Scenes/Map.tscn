@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://by0l47qlbn42r"]
 
-[ext_resource type="Texture2D" uid="uid://d3cfwltsfm83k" path="res://Assets/Tiles/grasslands.png" id="1_75sjc"]
+[ext_resource type="Texture2D" uid="uid://d3cfwltsfm83k" path="res://Assets/Tiles/grasslands.png" id="1_pmnhb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tmws6"]
-texture = ExtResource("1_75sjc")
+texture = ExtResource("1_pmnhb")
 texture_region_size = Vector2i(80, 80)
 0:0/next_alternative_id = 8
 0:0/0 = 0
@@ -28,7 +28,7 @@ texture_region_size = Vector2i(80, 80)
 0:0/7/transpose = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_icpjy"]
-texture = ExtResource("1_75sjc")
+texture = ExtResource("1_pmnhb")
 
 [sub_resource type="TileSet" id="1"]
 tile_size = Vector2i(80, 80)
